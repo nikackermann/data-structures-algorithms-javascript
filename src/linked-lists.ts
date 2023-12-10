@@ -109,16 +109,52 @@ class LinkedList {
         }
         return temp;
     }
-
     getLength() {
         console.log('Length: ' + this.length);
     }
+
+    set(index: number, value: number) {
+        let temp = this.get(index);
+        if (temp) {
+            temp.value = value;
+            // return true b/c we were able to return value.
+            return true;
+        }
+        return false;
+    }
+
+    insert(index: number, value: number) {
+        // inserting at the beginning of the linked list
+        if (index === 0) return this.unshift(value);
+
+        // inserting at the end of the linked list
+        if (index === this.length) return this.push(value);
+
+        // for out of bounds
+        if (index < 0 || index >= this.length) return false;
+
+        // create a new node to be inserted
+        const newNode = new Node(value);
+
+        // create a temp pointer to get item at index - 1
+        const temp = this.get(index - 1);
+
+        // check if temp actually exists
+        if (temp) {
+            newNode.next = temp.next;
+            temp.next = newNode;
+            this.length++;
+        }
+
+        return true;
+    }
 }
 
-let myLinkedList = new LinkedList(1);
-myLinkedList.push(2);
-myLinkedList.push(4);
-myLinkedList.shift();
+let myLinkedList = new LinkedList(11);
+myLinkedList.push(3);
+myLinkedList.push(23);
+myLinkedList.push(7);
+// myLinkedList.set(2, 88);
 // --------------------------
 console.log(myLinkedList);
 myLinkedList.getLength();
